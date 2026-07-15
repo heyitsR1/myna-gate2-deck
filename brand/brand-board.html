@@ -27,12 +27,17 @@
   .label{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
 
   /* ===== top bar ===== */
-  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
-    padding:18px 40px;background:rgba(11,31,58,.86);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,162,75,.25)}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:20px;
+    padding:16px 40px;background:rgba(11,31,58,.86);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,162,75,.25)}
   .topbar a{color:var(--bone);text-decoration:none;font-size:13px;letter-spacing:.04em}
-  .topbar .brandmark{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:18px;color:#fff}
+  .topbar .brandmark{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:18px;color:#fff;flex:0 0 auto}
   .topbar .back{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.75}
   .topbar .back:hover{opacity:1}
+  .topbar nav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;justify-content:flex-end}
+  .topbar nav a{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-soft);opacity:.85;transition:opacity .15s,color .15s}
+  .topbar nav a:hover{opacity:1;color:#fff}
+  .topbar nav .sep{width:1px;height:14px;background:rgba(255,255,255,.18)}
+  @media(max-width:640px){.topbar{padding:14px 20px}}
 
   /* ===== hero / concept slide ===== */
   .hero{background:
@@ -187,7 +192,11 @@
     <svg width="26" height="26" viewBox="0 0 100 100"><path d="M20 20 Q50 55 50 85 Q50 55 80 20" fill="none" stroke="#C9A24B" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="85" r="6" fill="#E9A23B"/></svg>
     Myna
   </div>
-  <span class="back">Merged Board — Sangam × Maina</span>
+  <nav>
+    <span class="back" style="opacity:.85">Brand Board</span>
+    <span class="sep"></span>
+    <a href="reference-board.html">Vision Board →</a>
+  </nav>
 </div>
 
 <!-- HERO / CONCEPT SLIDE -->
@@ -399,7 +408,7 @@
 </section>
 
 <footer>
-  MYNA — BRAND &amp; VISION BOARD · Team R1FTW
+  MYNA — BRAND BOARD · Team R1FTW &nbsp;·&nbsp; <a href="reference-board.html">See the Vision Board →</a>
 </footer>
 
 </body>
