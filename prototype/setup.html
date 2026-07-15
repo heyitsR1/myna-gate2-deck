@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Setup — Myna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F3A; --sea:#13315C; --steel:#27496D;
+    --brass:#C9A24B; --brass-soft:#E3CB8E;
+    --bone:#F4EFE6; --paper:#FBF8F1; --mist:#DDE3EA;
+    --clay:#C56A3E; --clay-deep:#A8512B; --marigold:#E9A23B;
+    --slate:#2A3340; --muted:#6B7686;
+    --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--sans);color:var(--slate);background:#0d1730;line-height:1.4;-webkit-font-smoothing:antialiased;display:flex;justify-content:center}
+
+  .phone{width:100%;max-width:420px;min-height:100vh;background:var(--paper);display:flex;flex-direction:column;position:relative}
+
+  .topbar{background:var(--ink);color:#fff;padding:20px 18px 18px;position:sticky;top:0;z-index:5}
+  .topbar-row{display:flex;align-items:center;gap:12px}
+  .back{width:34px;height:34px;border-radius:10px;background:rgba(244,239,230,.08);border:1px solid rgba(201,162,75,.3);
+    display:flex;align-items:center;justify-content:center;text-decoration:none;flex:0 0 auto}
+  .back svg{width:16px;height:16px;stroke:var(--brass-soft);fill:none;stroke-width:2}
+  .topbar h1{font-family:var(--serif);font-weight:500;font-size:20px}
+  .topbar .sub{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-soft);margin-top:4px}
+
+  .content{flex:1;padding:20px 18px 100px;display:flex;flex-direction:column;gap:26px}
+
+  .card{background:#fff;border:1px solid var(--mist);border-radius:16px;padding:18px}
+  .card h2{font-family:var(--serif);font-weight:500;font-size:16px;color:var(--ink);margin-bottom:12px}
+  .label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+  .field{margin-bottom:14px}
+  .field:last-child{margin-bottom:0}
+  input[type=text], textarea{width:100%;border:1px solid var(--mist);border-radius:10px;padding:10px 12px;font-family:var(--sans);
+    font-size:13.5px;color:var(--slate);background:var(--paper);resize:vertical}
+  textarea{min-height:52px}
+
+  /* tone slider */
+  .tonewrap{margin-top:4px}
+  .tonelabels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+  input[type=range]{width:100%;accent-color:var(--clay);height:4px}
+  .tonevalue{margin-top:8px;font-size:13px;color:var(--slate);text-align:center;font-weight:600}
+  .tonevalue span{color:var(--clay)}
+
+  /* FAQ list */
+  .faq{border:1px solid var(--mist);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:var(--paper)}
+  .faq:last-of-type{margin-bottom:0}
+  .faq .q{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:5px}
+  .faq .a{font-size:13px;color:var(--muted)}
+  .addfaq{margin-top:12px;width:100%;padding:10px;border-radius:10px;border:1px dashed var(--mist);background:transparent;
+    color:var(--clay-deep);font-family:var(--sans);font-weight:600;font-size:13px;cursor:pointer}
+
+  /* channel toggles */
+  .channel{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--mist)}
+  .channel:last-child{border-bottom:none}
+  .chico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .chico svg{width:17px;height:17px;fill:#fff}
+  .chico.wa{background:#3CB878}
+  .chico.ig{background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)}
+  .chico.fb{background:#4267B2}
+  .chico.viber{background:#8f5db7}
+  .chico.tiktok{background:#111}
+  .chname{flex:1;font-size:13.5px;font-weight:600;color:var(--slate)}
+  .chname .soon{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400;margin-top:2px}
+
+  .switch{position:relative;width:42px;height:24px;flex:0 0 auto}
+  .switch input{opacity:0;width:100%;height:100%;position:absolute;margin:0;cursor:pointer}
+  .slider{position:absolute;inset:0;background:var(--mist);border-radius:20px;transition:.2s}
+  .slider::before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+  .switch input:checked + .slider{background:var(--clay)}
+  .switch input:checked + .slider::before{transform:translateX(18px)}
+  .switch input:disabled + .slider{background:var(--mist);opacity:.6;cursor:not-allowed}
+
+  .savebar{padding:14px 18px 90px}
+  .savebtn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--marigold),var(--clay));
+    color:var(--ink);font-weight:700;font-size:14.5px;cursor:pointer}
+
+  .navlinks{display:flex;gap:10px;padding:0 18px 8px}
+  .navlink{flex:1;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--mist);background:#fff;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+
+  .bottomnav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:420px;
+    background:#fff;border-top:1px solid var(--mist);display:flex;padding:10px 6px 14px;z-index:10}
+  .navitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.04em}
+  .navitem svg{width:19px;height:19px;stroke:var(--muted);fill:none;stroke-width:1.7}
+  .navitem.active{color:var(--ink)}
+  .navitem.active svg{stroke:var(--clay)}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="topbar">
+    <div class="topbar-row">
+      <a class="back" href="inbox.html" aria-label="Back to inbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div>
+        <h1>Business setup</h1>
+        <div class="sub">Tone, FAQs &amp; channels</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="card">
+      <h2>Business info</h2>
+      <div class="field">
+        <span class="label">Business name</span>
+        <input type="text" value="Himal Momo &amp; Catering">
+      </div>
+      <div class="field">
+        <span class="label">Hours</span>
+        <input type="text" value="Every day · 10:00 AM – 8:00 PM">
+      </div>
+      <div class="field">
+        <span class="label">Location</span>
+        <input type="text" value="Patan Dhoka, Lalitpur">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>How should Maya sound?</h2>
+      <div class="tonewrap">
+        <div class="tonelabels"><span>Formal</span><span>Friendly</span></div>
+        <input type="range" id="toneSlider" min="0" max="100" value="70" oninput="updateTone(this.value)">
+        <div class="tonevalue">Currently: <span id="toneLabel">Warm &amp; friendly</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>FAQs Maya has learned</h2>
+      <div class="faq">
+        <div class="q">Do you offer delivery?</div>
+        <div class="a">Yes, free delivery within 5km, Rs. 100 flat fee beyond that.</div>
+      </div>
+      <div class="faq">
+        <div class="q">What's the minimum order for catering?</div>
+        <div class="a">Minimum 20 plates for event catering, booked at least 3 days ahead.</div>
+      </div>
+      <div class="faq">
+        <div class="q">Do you have a vegetarian/veg momo option?</div>
+        <div class="a">Yes — veg, chicken, and buff momo sets are all available.</div>
+      </div>
+      <button class="addfaq" onclick="alert('Add FAQ — opens a form to add a new question &amp; answer pair. No live backend in this prototype.')">+ Add another FAQ</button>
+    </div>
+
+    <div class="card">
+      <h2>Connected channels</h2>
+      <div class="channel">
+        <div class="chico wa"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2z"/></svg></div>
+        <div class="chname">WhatsApp</div>
+        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+      </div>
+      <div class="channel">
+        <div class="chico ig"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/></svg></div>
+        <div class="chname">Instagram</div>
+        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+      </div>
+      <div class="channel">
+        <div class="chico fb"><svg viewBox="0 0 24 24"><path d="M15 3h-3a5 5 0 00-5 5v3H4v4h3v6h4v-6h3l1-4h-4V8a1 1 0 011-1h3z"/></svg></div>
+        <div class="chname">Facebook</div>
+        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+      </div>
+      <div class="channel">
+        <div class="chico viber"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></div>
+        <div class="chname">Viber<span class="soon">Coming soon</span></div>
+        <label class="switch"><input type="checkbox" disabled><span class="slider"></span></label>
+      </div>
+      <div class="channel">
+        <div class="chico tiktok"><svg viewBox="0 0 24 24"><path d="M14 3v10.5a3 3 0 11-2-2.83V7a7 7 0 007 4V8a4 4 0 01-5-5z"/></svg></div>
+        <div class="chname">TikTok<span class="soon">Coming soon</span></div>
+        <label class="switch"><input type="checkbox" disabled><span class="slider"></span></label>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="savebar">
+    <button class="savebtn" onclick="alert('Setup saved — Maya will use this tone, FAQ list, and channel setup. No live backend in this prototype.')">Save setup</button>
+  </div>
+
+  <div class="navlinks">
+    <a class="navlink" href="inbox.html">Go to inbox</a>
+    <a class="navlink" href="digest.html">View digest</a>
+  </div>
+
+  <nav class="bottomnav">
+    <a class="navitem" href="inbox.html">
+      <svg viewBox="0 0 24 24"><path d="M4 5h16v11H7l-3 3z" stroke-linejoin="round"/></svg>Inbox
+    </a>
+    <a class="navitem" href="digest.html">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/></svg>Digest
+    </a>
+    <a class="navitem active" href="setup.html">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.56V21a2 2 0 01-4 0v-.09a1.7 1.7 0 00-1-1.55 1.7 1.7 0 00-1.87.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.7 1.7 0 00.33-1.87 1.7 1.7 0 00-1.55-1H3a2 2 0 010-4h.09a1.7 1.7 0 001.55-1 1.7 1.7 0 00-.33-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06a1.7 1.7 0 001.87.33H9a1.7 1.7 0 001-1.55V3a2 2 0 014 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.7 1.7 0 00-.33 1.87V9c.26.6.8 1 1.55 1H21a2 2 0 010 4h-.09a1.7 1.7 0 00-1.55 1z"/></svg>Setup
+    </a>
+  </nav>
+
+</div>
+
+<script>
+  function updateTone(val){
+    var label = document.getElementById('toneLabel');
+    if(val < 25){ label.textContent = 'Strictly formal'; }
+    else if(val < 50){ label.textContent = 'Professional'; }
+    else if(val < 75){ label.textContent = 'Warm & friendly'; }
+    else { label.textContent = 'Very friendly & casual'; }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Myna — Welcome</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F3A; --sea:#13315C; --steel:#27496D;
+    --brass:#C9A24B; --brass-soft:#E3CB8E;
+    --bone:#F4EFE6; --paper:#FBF8F1; --mist:#DDE3EA;
+    --clay:#C56A3E; --clay-deep:#A8512B; --marigold:#E9A23B;
+    --slate:#2A3340; --muted:#6B7686;
+    --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--sans);color:var(--slate);background:#0d1730;line-height:1.5;-webkit-font-smoothing:antialiased;display:flex;justify-content:center}
+
+  .phone{
+    width:100%;max-width:420px;min-height:100vh;
+    background:radial-gradient(900px 500px at 80% -10%, rgba(233,162,59,.16), transparent 55%),
+               radial-gradient(700px 500px at 10% 110%, rgba(201,162,75,.12), transparent 60%),
+               linear-gradient(180deg,var(--ink),#0a1a31 65%,#0a1830);
+    color:var(--bone);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:48px 28px;position:relative;overflow:hidden;
+  }
+  .phone::after{content:"";position:absolute;inset:0;background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:40px 40px;mask-image:radial-gradient(700px 500px at 60% 20%,#000,transparent 75%);pointer-events:none}
+
+  .crest{position:relative;z-index:2;width:104px;height:104px;border-radius:28px;
+    background:linear-gradient(160deg,#13315C,#0B1F3A);
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(201,162,75,.4);box-shadow:0 20px 45px rgba(0,0,0,.45);margin-bottom:28px}
+  .crest svg{width:56px;height:56px}
+
+  .wordmark{position:relative;z-index:2;font-family:var(--serif);font-weight:500;font-size:32px;color:#fff;text-align:center;letter-spacing:-.01em}
+  .wordmark .ph{color:var(--brass-soft);font-style:italic}
+  .tagline{position:relative;z-index:2;font-family:var(--serif);font-style:italic;font-size:16px;color:var(--mist);margin-top:10px;text-align:center;max-width:26ch}
+
+  .spacer{flex:1;min-height:24px}
+
+  .cta-stack{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;gap:12px;margin-top:36px}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;
+    font-family:var(--sans);font-weight:600;font-size:15px;text-decoration:none;
+    padding:15px 20px;border-radius:14px;transition:transform .15s ease,opacity .15s ease}
+  .btn:active{transform:scale(.98)}
+  .btn.primary{background:linear-gradient(135deg,var(--marigold),var(--clay));color:var(--ink);
+    box-shadow:0 12px 26px rgba(233,162,59,.28)}
+  .btn.secondary{background:rgba(244,239,230,.06);color:var(--bone);border:1px solid rgba(201,162,75,.35)}
+  .btn.secondary:hover{background:rgba(244,239,230,.1)}
+
+  .footnote{position:relative;z-index:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(244,239,230,.45);margin-top:26px;text-align:center}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="crest">
+      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#C9A24B" stroke-width="2"/><path d="M30 30 Q50 65 50 84" fill="none" stroke="#F4EFE6" stroke-width="6" stroke-linecap="round"/><path d="M70 30 Q50 65 50 84" fill="none" stroke="#C56A3E" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="84" r="5" fill="#E9A23B"/></svg>
+    </div>
+    <div class="wordmark">My<span class="ph">na</span></div>
+    <div class="tagline">Never miss a lead. Never sound like a bot.</div>
+
+    <div class="spacer"></div>
+
+    <div class="cta-stack">
+      <a class="btn primary" href="inbox.html">Get Started</a>
+      <a class="btn secondary" href="inbox.html">I already have an account</a>
+    </div>
+    <div class="footnote">WhatsApp · Instagram · Facebook — one inbox</div>
+  </div>
+</body>
+</html>

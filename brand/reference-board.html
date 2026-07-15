@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference Board — Sangam &amp; Maina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F3A; --sea:#13315C; --steel:#27496D;
+    --brass:#C9A24B; --brass-soft:#E3CB8E;
+    --bone:#F4EFE6; --paper:#FBF8F1; --mist:#DDE3EA;
+    --slate:#2A3340; --muted:#6B7686;
+    --m-ink:#211B16; --m-clay:#C56A3E; --m-marigold:#E9A23B; --m-teal:#1E2B28; --m-cream:#F7F1E4; --m-sand:#EFE6D3; --m-spark:#F4C542;
+    --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+    --iserif:'Instrument Serif',Georgia,serif; --dmsans:'DM Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--slate);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:14px}
+  .eyebrow::before{content:"";width:32px;height:1px;background:var(--brass)}
+  .label{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+  h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--ink);line-height:1.08;letter-spacing:-.01em}
+
+  /* top bar */
+  .topbar{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+    padding:18px 40px;background:rgba(11,31,58,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,162,75,.25)}
+  .topbar .brandmark{font-family:var(--serif);font-size:18px;color:#fff;display:flex;align-items:center;gap:10px}
+  .topbar .sub{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-soft);opacity:.85}
+
+  /* hero */
+  header.hero{background:
+      radial-gradient(1100px 560px at 82% -12%, rgba(201,162,75,.16), transparent 60%),
+      linear-gradient(180deg,var(--ink),#0a1a31 70%, #0a1830);
+    color:var(--bone);padding:90px 0 70px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;inset:0;background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:46px 46px;mask-image:radial-gradient(800px 500px at 70% 20%,#000,transparent 75%);pointer-events:none}
+  header.hero .wrap{position:relative;z-index:2}
+  header.hero h1{font-size:clamp(38px,6vw,64px);color:#fff;margin:18px 0 14px}
+  header.hero h1 em{font-style:italic;color:var(--brass-soft)}
+  header.hero p.tag{font-size:17px;max-width:64ch;color:#cdd6e2}
+  header.hero .metarow{display:flex;gap:36px;margin-top:34px;flex-wrap:wrap}
+  header.hero .metarow div p{color:#fff;font-size:14.5px;margin-top:6px;font-weight:500}
+  header.hero .metarow div .label{color:rgba(227,203,142,.75)}
+
+  section{padding:70px 0}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--mist);padding-bottom:20px;margin-bottom:40px}
+  .sec-head h2{font-size:clamp(26px,3.6vw,38px)}
+  .sec-head .idx{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.2em}
+
+  /* two-column board */
+  .board-cols{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+  .col{border-radius:20px;overflow:hidden;border:1px solid var(--mist)}
+  .col-head{padding:32px 34px 26px}
+  .col.trust .col-head{background:linear-gradient(160deg,var(--ink),#0d2342);color:#fff}
+  .col.human .col-head{background:linear-gradient(160deg,var(--m-ink),#2b2119);color:var(--m-cream)}
+  .col-head .eyebrow2{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;margin-bottom:10px}
+  .col.trust .eyebrow2{color:var(--brass-soft)}
+  .col.human .eyebrow2{color:var(--m-marigold)}
+  .col-head h3{font-size:clamp(26px,3vw,34px);color:#fff}
+  .col.trust .col-head h3{font-family:var(--serif)}
+  .col.human .col-head h3{font-family:var(--iserif);font-style:italic;font-weight:400}
+  .col-head p{font-size:14px;margin-top:12px;max-width:44ch;opacity:.9}
+  .col.trust .col-head p{color:#cdd6e2}
+  .col.human .col-head p{color:var(--m-sand);font-family:var(--dmsans)}
+
+  .refs{background:#fff;padding:8px}
+  .ref{display:grid;grid-template-columns:220px 1fr;gap:22px;padding:26px 26px;border-top:1px solid var(--mist)}
+  .refs .ref:first-child{border-top:none}
+  .swatch{border-radius:12px;min-height:150px;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;position:relative;overflow:hidden;border:1px solid var(--mist)}
+  .swatch img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
+  .swatch .tag2{background:rgba(11,31,58,.72);align-self:flex-start;padding:4px 8px;border-radius:6px}
+  .swatch .tag2{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5);position:relative;z-index:2}
+  .ref h4{font-family:var(--sans);font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .col.human .ref h4{font-family:var(--dmsans);color:var(--m-ink)}
+  .ref .src{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--brass);margin-bottom:10px;display:block}
+  .col.human .ref .src{color:var(--m-clay)}
+  .ref p{font-size:13.8px;color:var(--slate);margin-bottom:8px}
+  .ref .borrow{background:var(--bone);border-left:3px solid var(--brass);padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px;margin-top:8px}
+  .col.human .ref .borrow{background:var(--m-sand);border-left:3px solid var(--m-clay)}
+  .ref .borrow b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--muted)}
+
+  /* trust swatch variants */
+  .sw-t1{background:linear-gradient(160deg,#0B1F3A,#13315C)}
+  .sw-t1::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(201,162,75,.14) 0 1px,transparent 1px 22px)}
+  .sw-t2{background:linear-gradient(150deg,#000,#1a1a18)}
+  .sw-t2::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 70%,rgba(255,176,0,.5),transparent 60%)}
+  .sw-t3{background:linear-gradient(160deg,#0B1F3A 0%, #C9A24B 130%)}
+  .sw-t4{background:linear-gradient(150deg,#13315C,#27496D)}
+  .sw-t4::after{content:"";position:absolute;inset:0;background:conic-gradient(from 210deg at 50% 120%, transparent 0 30deg, rgba(201,162,75,.5) 31deg 32deg, transparent 33deg)}
+
+  /* human swatch variants */
+  .sw-h1{background:linear-gradient(160deg,#C56A3E,#E9A23B)}
+  .sw-h2{background:linear-gradient(150deg,#211B16,#4a3324)}
+  .sw-h2::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 60% 30%,rgba(244,197,66,.55),transparent 55%)}
+  .sw-h3{background:linear-gradient(150deg,#F7F1E4,#EFE6D3)}
+  .sw-h3 .tag2{color:var(--m-ink)!important;text-shadow:none}
+  .sw-h4{background:linear-gradient(160deg,#1E2B28,#3a4a44)}
+  .sw-h4::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 40% 70%,rgba(233,162,59,.4),transparent 60%)}
+
+  footer{background:var(--ink);color:var(--mist);text-align:center;padding:50px 20px;font-family:var(--mono);font-size:12px;letter-spacing:.1em}
+  footer a{color:var(--brass);text-decoration:none}
+
+  @media(max-width:900px){.board-cols{grid-template-columns:1fr}.ref{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brandmark">
+    <svg width="24" height="24" viewBox="0 0 100 100"><path d="M20 20 Q50 55 50 85 Q50 55 80 20" fill="none" stroke="#C9A24B" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="85" r="6" fill="#C9A24B"/></svg>
+    Reference Board
+  </div>
+  <span class="sub">Sangam · Maina — external research</span>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Gate 2 · Brand Research</div>
+    <h1>Real-world references for the <em>two finalist bets</em></h1>
+    <p class="tag">Per the handoff brief, Sangam draws on "Dongwon (corporate navy modernism)"; Maina draws on "Workoholics WIP (editorial, photographic, human)." Below: 3 additional real reference points per direction, each with a specific, borrowable detail — not a vibe, a technique.</p>
+    <div class="metarow">
+      <div><div class="label">Direction A</div><p>Trust / institutional / navy &amp; brass</p></div>
+      <div><div class="label">Direction B</div><p>Warm / human / editorial photography</p></div>
+      <div><div class="label">Source</div><p>Live web search, Jul 2026</p></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Two Reference Sets</h2><span class="idx">01 / 01</span></div>
+    <div class="board-cols">
+
+      <!-- TRUST COLUMN -->
+      <div class="col trust">
+        <div class="col-head">
+          <div class="eyebrow2">Sangam · The Trust Bet</div>
+          <h3>Trust references</h3>
+          <p>Institutional, restrained, navy-and-brass — quiet authority through material and structure, not decoration.</p>
+        </div>
+        <div class="refs">
+
+          <div class="ref">
+            <div class="swatch sw-t1"><img src="assets/refs/bloomberg.png" alt="Bloomberg Terminal product page — amber-on-black data density"><span class="tag2">bloomberg.com/professional</span></div>
+            <div>
+              <h4>Bloomberg Terminal — amber-on-black data aesthetic</h4>
+              <span class="src">Financial software · est. 1980s</span>
+              <p>The terminal kept its dark, high-density, single-accent-color screen for 40+ years because traders read it as a mark of professional seriousness — complexity signals capability, not clutter.</p>
+              <div class="borrow"><b>Borrow</b>Use ONE accent color (brass) sparingly against a dark ground for data/status states in the AI-reply dashboard — never mix a second accent hue, exactly as Bloomberg holds the line on amber.</div>
+            </div>
+          </div>
+
+          <div class="ref">
+            <div class="swatch sw-t2"><img src="assets/refs/jpmc.png" alt="jpmorganchase.com homepage — serif wordmark, warm brown accent over black photography"><span class="tag2">jpmorganchase.com</span></div>
+            <div>
+              <h4>JPMorganChase — 2024 rebrand (serif + brown + octagon vault mark)</h4>
+              <span class="src">Banking · rebrand 2024</span>
+              <p>Their newest identity paired a bolder serif with rounded terminals and added a warm brown to an otherwise cold-blue system "for reliability" — softening institutional blue without losing gravitas. The octagon mark still reads as a vault.</p>
+              <div class="borrow"><b>Borrow</b>The move of adding ONE warm neutral (brass/bone) to soften navy — validates Sangam's 60/30/10 ratio as an intentional, bank-tested technique rather than a stylistic guess. Also: a single enclosed geometric badge (like the octagon) reads as "vault/security" — good model for Ulu's crest mark.</div>
+            </div>
+          </div>
+
+          <div class="ref">
+            <div class="swatch sw-t4"><img src="assets/refs/mercury.png" alt="mercury.com homepage — calm landscape hero, restrained copy, single accent button"><span class="tag2">mercury.com</span></div>
+            <div>
+              <h4>Mercury — numberless cards, muted palette, "all signal no filler" copy</h4>
+              <span class="src">Neobank · $5.2B valuation, 2026</span>
+              <p>Mercury builds trust through restraint: soft gradients, minimal visual noise, sensitive data hidden by default, and marketing copy stripped of corporate filler. Premium reads as "nothing to prove."</p>
+              <div class="borrow"><b>Borrow</b>Apply the "hide the noisy data, show only what matters" pattern to Sangam's unified inbox — collapse channel badges/timestamps into a calm single thread by default, expand only on click. Restraint as a trust signal, not just a color choice.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- HUMAN COLUMN -->
+      <div class="col human">
+        <div class="col-head">
+          <div class="eyebrow2">Maina · The Human Bet</div>
+          <h3>Human references</h3>
+          <p>Warm, candid, documentary — real people over stock people; the photography carries the brand more than the type does.</p>
+        </div>
+        <div class="refs">
+
+          <div class="ref">
+            <div class="swatch sw-h1"><img src="assets/refs/airbnb.png" alt="Airbnb newsroom — Made Possible by Hosts campaign announcement with warm documentary photography"><span class="tag2">news.airbnb.com</span></div>
+            <div>
+              <h4>Airbnb — "Made Possible by Hosts" (2021 global campaign)</h4>
+              <span class="src">Travel/marketplace · doc photography</span>
+              <p>Real photos shot on real trips by working documentary photographers (Christopher Anderson, Magdalena Wosinska among 100+), edited with warm, nostalgic color grading and classic-song scoring — never staged model shoots.</p>
+              <div class="borrow"><b>Borrow</b>The production model, not just the look: commission working photographers to shoot actual Nepali shop owners in their own shops over a few real working days, rather than art-directing a "diverse cast" studio shoot. Grade warm/golden, slightly desaturated — matches Maina's golden-hour direction exactly.</div>
+            </div>
+          </div>
+
+          <div class="ref">
+            <div class="swatch sw-h2"><img src="assets/refs/cashapp.png" alt="cash.app homepage — people-first fintech brand"><span class="tag2">cash.app</span></div>
+            <div>
+              <h4>Cash App — "Cash App Communities" documentary series</h4>
+              <span class="src">Fintech · observational documentary, 2024</span>
+              <p>Moves fintech marketing away from feature/convenience messaging toward people-first storytelling: observational films where the product is woven into the action rather than being the subject, showing how small transactions sustain human bonds.</p>
+              <div class="borrow"><b>Borrow</b>Content strategy, not visual style: build Maina's launch story around 3-4 real shop-owner mini-documentaries where the AI auto-reply is glimpsed in use, not explained — a layout idea for the mood/testimonial section of the brand board (video-still grid instead of icon grid).</div>
+            </div>
+          </div>
+
+          <div class="ref">
+            <div class="swatch sw-h4"><img src="assets/refs/workoholics.png" alt="workoholics.es — oversized editorial type on warm cream ground"><span class="tag2">workoholics.es</span></div>
+            <div>
+              <h4>Workoholics — "WIP" (Work in Progress) creative-community editorial</h4>
+              <span class="src">Digital agency · editorial platform, est. 2022</span>
+              <p>WIP's own visual language centers the "ever-changing, intense, deeply human" moment of creative work-in-progress — imperfect, mid-process, expressive faces rather than polished portraits, explicitly named in the handoff brief as Maina's direct inspiration.</p>
+              <div class="borrow"><b>Borrow</b>The "process, not polish" framing: photograph shop owners mid-task (wrapping an order, typing a reply, mid-laugh) instead of posed portraits — a candid, slightly imperfect crop/framing style, reinforcing Maina's "in your voice" authenticity claim.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>Notes on sourcing</h2><span class="idx">—</span></div>
+    <p style="max-width:74ch;color:var(--muted);font-size:14px">Thumbnails above are our own screenshots of each reference's public website (captured July 2026; Bloomberg and Cash App via the Internet Archive's Wayback Machine), stored locally in <code>assets/refs/</code> — used strictly as internal design-research references, not as assets for any published material. For production, license or shoot originals per the "borrow" notes rather than reusing the referenced brands' own photography.</p>
+  </div>
+</section>
+
+<footer>
+  GATE 2 — REFERENCE BOARD · Sangam (Trust) &amp; Maina (Human) &nbsp;·&nbsp; Built from <a href="https://sambad.io" target="_blank" rel="noopener">competitor + fintech/editorial research</a>
+</footer>
+
+</body>
+</html>

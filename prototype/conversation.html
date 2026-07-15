@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sunita Pradhan — Myna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F3A; --sea:#13315C; --steel:#27496D;
+    --brass:#C9A24B; --brass-soft:#E3CB8E;
+    --bone:#F4EFE6; --paper:#FBF8F1; --mist:#DDE3EA;
+    --clay:#C56A3E; --clay-deep:#A8512B; --marigold:#E9A23B;
+    --slate:#2A3340; --muted:#6B7686;
+    --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--sans);color:var(--slate);background:#0d1730;line-height:1.4;-webkit-font-smoothing:antialiased;display:flex;justify-content:center}
+
+  .phone{width:100%;max-width:420px;min-height:100vh;background:var(--bone);display:flex;flex-direction:column;position:relative}
+
+  .topbar{background:var(--ink);color:#fff;padding:16px 14px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+  .back{width:34px;height:34px;border-radius:10px;background:rgba(244,239,230,.08);border:1px solid rgba(201,162,75,.3);
+    display:flex;align-items:center;justify-content:center;text-decoration:none;flex:0 0 auto}
+  .back svg{width:16px;height:16px;stroke:var(--brass-soft);fill:none;stroke-width:2}
+  .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sea),var(--ink));
+    border:1px solid rgba(201,162,75,.4);color:#fff;font-family:var(--serif);font-size:14px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .who{flex:1;min-width:0}
+  .who .name{font-size:14.5px;font-weight:700}
+  .who .sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--brass-soft);display:flex;align-items:center;gap:5px;margin-top:2px}
+  .who .sub svg{width:10px;height:10px}
+
+  .thread{flex:1;padding:18px 14px 14px;display:flex;flex-direction:column;gap:14px}
+  .daymark{text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:4px 0}
+
+  .msg{max-width:82%;display:flex;flex-direction:column;gap:5px}
+  .msg.in{align-self:flex-start}
+  .msg.out{align-self:flex-end;align-items:flex-end}
+
+  .bubble{padding:11px 14px;border-radius:16px;font-size:14px;line-height:1.45}
+  .msg.in .bubble{background:#fff;border:1px solid var(--mist);border-bottom-left-radius:4px;color:var(--slate)}
+
+  .msg.draft .bubble{background:linear-gradient(150deg,#fff8ea,#fdf1d9);border:1px solid var(--brass-soft);
+    border-bottom-right-radius:4px;color:var(--slate)}
+  .tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--clay-deep);background:rgba(197,106,62,.1);border:1px solid rgba(197,106,62,.3);
+    padding:3px 9px;border-radius:20px}
+  .tag svg{width:10px;height:10px}
+
+  .msg.sent .bubble{background:var(--ink);color:#fff;border-bottom-right-radius:4px}
+  .msg.sent .tag{color:var(--brass-soft);background:rgba(244,239,230,.08);border-color:rgba(201,162,75,.35)}
+
+  .msgtime{font-family:var(--mono);font-size:9.5px;color:var(--muted);padding:0 3px}
+
+  .draftactions{display:flex;gap:8px;margin-top:2px}
+  .abtn{font-family:var(--sans);font-weight:600;font-size:12px;padding:7px 13px;border-radius:9px;border:none;cursor:pointer}
+  .abtn.approve{background:var(--ink);color:#fff}
+  .abtn.edit{background:#fff;color:var(--ink);border:1px solid var(--mist)}
+  .approved-pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:#2f7a52;background:rgba(60,184,120,.12);border:1px solid rgba(60,184,120,.35);padding:4px 10px;border-radius:20px}
+
+  .composer{display:flex;gap:8px;align-items:center;padding:12px 14px 16px;background:var(--bone);border-top:1px solid var(--mist)}
+  .composer input{flex:1;border:1px solid var(--mist);background:#fff;border-radius:22px;padding:11px 16px;font-family:var(--sans);font-size:13.5px;color:var(--slate)}
+  .composer input::placeholder{color:var(--muted)}
+  .sendbtn{width:40px;height:40px;border-radius:50%;background:var(--clay);border:none;display:flex;align-items:center;justify-content:center;flex:0 0 auto;cursor:pointer}
+  .sendbtn svg{width:17px;height:17px;fill:#fff}
+
+  .backlink{display:block;text-align:center;padding:8px 0 2px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;background:var(--bone)}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="topbar">
+    <a class="back" href="inbox.html" aria-label="Back to inbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <div class="avatar">SP</div>
+    <div class="who">
+      <div class="name">Sunita Pradhan</div>
+      <div class="sub"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2z"/></svg>WhatsApp · online recently</div>
+    </div>
+  </div>
+
+  <div class="thread">
+    <div class="daymark">Today, 7:38 AM</div>
+
+    <div class="msg in">
+      <div class="bubble">Hi! Do you still do momo catering for events?</div>
+      <div class="msgtime">7:38 AM</div>
+    </div>
+
+    <div class="msg sent">
+      <span class="tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>You · sent</span>
+      <div class="bubble">Yes we do! What date and how many guests are you thinking?</div>
+      <div class="msgtime">7:40 AM</div>
+    </div>
+
+    <div class="msg in">
+      <div class="bubble">Great — it'd be for about 35 people, a family function on the 30th. Is the momo catering set still Rs. 250 per plate for 30+ people?</div>
+      <div class="msgtime">7:42 AM</div>
+    </div>
+
+    <div class="msg draft">
+      <span class="tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Drafted by Maya</span>
+      <div class="bubble">Thanks for asking! For 30+ guests our current catering rate is Rs. 280 per plate (this went up from Rs. 250 last month) — I want to double check that with the owner before confirming your booking, one moment 🙏</div>
+      <div class="draftactions">
+        <button class="abtn approve" onclick="approveDraft(this)">Approve &amp; send</button>
+        <button class="abtn edit" onclick="alert('Edit draft — opens the reply in an editable field before sending. No live backend in this prototype.')">Edit</button>
+      </div>
+    </div>
+
+    <div class="msg in">
+      <div class="bubble">Sounds good, just let me know 🙂</div>
+      <div class="msgtime">7:44 AM</div>
+    </div>
+  </div>
+
+  <div class="composer">
+    <input type="text" placeholder="Type a message… (prototype only)" disabled>
+    <button class="sendbtn" onclick="alert('This is a static prototype — sending is not wired to a live channel yet.')" aria-label="Send">
+      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+    </button>
+  </div>
+  <a class="backlink" href="inbox.html">← Back to inbox</a>
+</div>
+
+<script>
+  function approveDraft(btn){
+    var msg = btn.closest('.msg');
+    var actions = btn.parentElement;
+    actions.innerHTML = '<span class="approved-pill">✓ Approved &amp; sent</span>';
+  }
+</script>
+</body>
+</html>

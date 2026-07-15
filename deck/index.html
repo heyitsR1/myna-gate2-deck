@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Myna — Gate 2 Deck</title>
+
+<!-- Myna — Gate 2 Deck — Team R1FTW -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#0B1F3A; --sea:#13315C; --steel:#27496D;
+    --brass:#C9A24B; --brass-soft:#E3CB8E;
+    --bone:#F4EFE6; --paper:#FBF8F1; --mist:#DDE3EA;
+    --clay:#C56A3E; --clay-deep:#A8512B; --marigold:#E9A23B;
+    --slate:#2A3340; --muted:#6B7686;
+    --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:#20242c}
+  body{font-family:var(--sans);color:var(--slate);background:#20242c;-webkit-font-smoothing:antialiased}
+
+  /* ===== deck chrome (screen only — hidden on print) ===== */
+  .deck-toolbar{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:10px 22px;background:rgba(11,31,58,.92);backdrop-filter:blur(10px);
+    color:var(--bone);font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  }
+  .deck-toolbar b{color:var(--brass-soft);font-family:var(--serif);font-size:14px;letter-spacing:0;margin-right:14px}
+  .deck-toolbar .hint{opacity:.65}
+
+  /* ===== slide shell — 16:9, print friendly ===== */
+  .slide{
+    width:1280px;height:720px;margin:96px auto 40px;
+    position:relative;overflow:hidden;
+    background:var(--paper);color:var(--slate);
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+    display:flex;flex-direction:column;
+    page-break-after:always;
+    break-after:page;
+  }
+  .slide:first-child{margin-top:70px}
+  .slide-inner{padding:64px 76px;flex:1;display:flex;flex-direction:column;min-height:0}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--clay);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--clay)}
+  h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--ink);line-height:1.08;letter-spacing:-.01em}
+  .slide-index{position:absolute;bottom:28px;right:36px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
+  .slide-foot{position:absolute;bottom:28px;left:76px;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+
+  /* ===== dark slide variant ===== */
+  .slide.dark{background:linear-gradient(180deg,var(--ink),#0a1a31 70%,#0a1830);color:var(--bone)}
+  .slide.dark h1,.slide.dark h2,.slide.dark h3{color:#fff}
+  .slide.dark .eyebrow{color:var(--marigold)}
+  .slide.dark .eyebrow::before{background:var(--marigold)}
+  .slide.dark .slide-index,.slide.dark .slide-foot{color:rgba(244,239,230,.5)}
+  .slide.dark .muted{color:#c2ccd9}
+
+  /* ===== cover ===== */
+  .cover{background:
+      radial-gradient(1100px 560px at 82% -10%, rgba(233,162,59,.16), transparent 55%),
+      radial-gradient(900px 500px at 10% 100%, rgba(201,162,75,.12), transparent 60%),
+      linear-gradient(180deg,var(--ink),#0a1a31 70%, #0a1830);
+    color:var(--bone);
+  }
+  .cover::after{content:"";position:absolute;inset:0;background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:44px 44px;mask-image:radial-gradient(800px 500px at 70% 30%,#000,transparent 75%);pointer-events:none}
+  .cover .slide-inner{position:relative;z-index:2;justify-content:center;align-items:center;text-align:center;gap:6px}
+  .cover .crest{width:120px;height:120px;border-radius:30px;background:linear-gradient(160deg,#13315C,#0B1F3A);
+    display:flex;align-items:center;justify-content:center;border:1px solid rgba(201,162,75,.4);
+    box-shadow:0 22px 50px rgba(0,0,0,.5);margin-bottom:26px}
+  .cover .crest svg{width:64px;height:64px}
+  .cover h1{font-size:76px;color:#fff}
+  .cover h1 .ph{color:var(--brass-soft);font-style:italic}
+  .cover .descriptor{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--mist);margin-top:14px;max-width:40ch}
+  .cover .team{font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass-soft);margin-top:40px}
+  .cover .mascot-note{margin-top:30px;display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.05);
+    border:1px solid rgba(201,162,75,.3);border-radius:16px;padding:14px 22px}
+  .cover .mascot-note img{width:56px;height:56px;object-fit:cover;border-radius:12px;border:1px solid rgba(201,162,75,.4)}
+  .cover .mascot-note span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:rgba(244,239,230,.7);text-align:left;max-width:32ch}
+
+  /* ===== hook / stat slide ===== */
+  .hook{justify-content:center;align-items:center;text-align:center}
+  .hook .slide-inner{justify-content:center;align-items:center;text-align:center}
+  .hook .stat{font-family:var(--serif);font-size:56px;line-height:1.18;max-width:20ch;color:#fff}
+  .hook .stat b{color:var(--marigold);font-weight:600}
+  .hook .src{margin-top:26px;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:rgba(244,239,230,.55)}
+
+  /* ===== generic content slide ===== */
+  .content h2{font-size:40px;margin-bottom:6px}
+  .content .sub{color:var(--muted);font-size:15px;margin-bottom:28px;max-width:70ch}
+  .bullets{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .bullets li{position:relative;padding-left:26px;font-size:16.5px;line-height:1.5}
+  .bullets li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:var(--clay)}
+  .bullets li b{color:var(--ink)}
+  .dark .bullets li b{color:#fff}
+  .dark .bullets li::before{background:var(--marigold)}
+
+  .quote-block{margin-top:30px;border-left:3px solid var(--brass);padding-left:24px}
+  .quote-block p{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink);line-height:1.4}
+  .dark .quote-block p{color:#fff}
+  .quote-block .attr{margin-top:10px;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+  .thesis-line{margin-top:auto;padding-top:30px;border-top:1px solid var(--mist);font-family:var(--serif);font-size:26px;color:var(--ink);line-height:1.4}
+  .dark .thesis-line{border-top-color:rgba(255,255,255,.15);color:#fff}
+  .thesis-line em{color:var(--clay);font-style:italic}
+  .dark .thesis-line em{color:var(--marigold)}
+
+  /* ===== tables ===== */
+  .tbl-wrap{overflow-x:auto;margin-top:8px}
+  table.gtable{width:100%;border-collapse:collapse;font-size:13px}
+  table.gtable th{background:var(--ink);color:#fff;text-align:left;padding:10px 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+  table.gtable td{padding:10px 14px;border-bottom:1px solid var(--mist);vertical-align:top;line-height:1.4}
+  table.gtable tr:nth-child(even) td{background:rgba(221,227,234,.25)}
+  table.gtable td b{color:var(--ink)}
+  .gap-statement{margin-top:18px;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink);border-top:1px solid var(--mist);padding-top:16px}
+
+  /* ===== two-col with phone mockup ===== */
+  .two-col{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center;align-content:center;flex:1;min-height:0}
+  .phone-mock{
+    width:100%;max-width:250px;aspect-ratio:9/19.5;margin:0 auto;
+    background:linear-gradient(180deg,var(--ink),#0a1a31);
+    border-radius:32px;border:8px solid #111;box-shadow:0 26px 60px rgba(0,0,0,.35);
+    color:var(--bone);position:relative;overflow:hidden
+  }
+  .phone-mock .notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:70px;height:16px;background:#111;border-radius:10px;z-index:2}
+  .phone-mock img.shot{position:absolute;left:0;right:0;bottom:0;top:38px;height:calc(100% - 38px);width:100%;object-fit:cover;object-position:top;border-radius:0 0 24px 24px}
+
+  /* ===== keywords ===== */
+  .kw-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:6px}
+  .kw-card{border:1px solid var(--mist);border-radius:14px;padding:26px 28px}
+  .kw-card h3{font-size:15px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--clay);margin-bottom:14px;font-weight:500}
+  .kw-card ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .kw-card li{font-size:16px;color:var(--ink)}
+  .tagline-band{margin-top:auto;background:var(--ink);color:#fff;border-radius:16px;padding:34px;text-align:center}
+  .tagline-band .q{font-family:var(--serif);font-style:italic;font-size:30px}
+  .tagline-band .q em{color:var(--marigold);font-style:italic}
+  .tagline-band .rec{margin-top:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-soft)}
+
+  /* ===== moscow ===== */
+  .moscow-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0}
+  .mos-card{border:1px solid var(--mist);border-radius:14px;padding:22px 24px;overflow:auto}
+  .mos-card h3{font-size:16px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+  .mos-card.must{border-top:4px solid var(--clay)} .mos-card.must h3{color:var(--clay)}
+  .mos-card.should{border-top:4px solid var(--marigold)} .mos-card.should h3{color:var(--clay-deep)}
+  .mos-card.could{border-top:4px solid var(--brass)} .mos-card.could h3{color:var(--brass)}
+  .mos-card.wont{border-top:4px solid var(--muted)} .mos-card.wont h3{color:var(--muted)}
+  .mos-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .mos-card li{position:relative;padding-left:18px;font-size:13.5px;line-height:1.45}
+  .mos-card li::before{content:"–";position:absolute;left:0;color:var(--muted)}
+
+  /* ===== tech stack ===== */
+  .tech-grid{display:flex;flex-direction:column;gap:18px;margin-top:4px}
+  .tech-row{display:grid;grid-template-columns:170px 1fr;gap:20px;align-items:baseline;border-bottom:1px solid var(--mist);padding-bottom:16px}
+  .tech-row .lbl{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--clay);font-weight:600}
+  .tech-row p{font-size:15px;line-height:1.5;color:var(--slate)}
+
+  /* ===== link-out slides (brand board / mvp) ===== */
+  .linkout{justify-content:center;align-items:center;text-align:center}
+  .linkout .slide-inner{justify-content:center;align-items:center;text-align:center;gap:22px}
+  .linkout h1{font-size:58px}
+  .linkout .url{font-family:var(--mono);font-size:16px;color:var(--clay);text-decoration:underline;word-break:break-all}
+  .linkout .note{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;max-width:44ch}
+
+  /* ===== thank you ===== */
+  .thankyou{background:linear-gradient(180deg,var(--ink),#0a1a31 70%,#0a1830);color:#fff}
+  .thankyou .slide-inner{justify-content:center;align-items:center;text-align:center}
+  .thankyou h1{font-size:80px;color:#fff}
+  .thankyou .tag{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--mist);margin-top:16px}
+
+  .row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+  .stat-card{border:1px solid var(--mist);border-radius:12px;padding:18px 20px}
+  .stat-card .n{font-family:var(--serif);font-size:34px;color:var(--ink)}
+  .stat-card .d{font-size:12.5px;color:var(--muted);margin-top:4px}
+
+  @media print{
+    html,body{background:#fff !important}
+    .deck-toolbar{display:none}
+    .slide,.slide *{-webkit-print-color-adjust:exact;print-color-adjust:exact;color-adjust:exact}
+    .slide{margin:0;box-shadow:none;width:100%;height:100vh}
+    @page{size:13.333in 7.5in;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="deck-toolbar">
+  <div><b>Myna</b><span class="hint">Gate 2 Deck — 19 slides — 16:9 — print to PDF for export</span></div>
+  <span class="hint">Sangam × Maina merged brand</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. COVER -->
+<!-- ============================================================ -->
+<section class="slide cover">
+  <div class="slide-inner">
+    <div class="crest">
+      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#C9A24B" stroke-width="2"/><path d="M30 30 Q50 65 50 84" fill="none" stroke="#F4EFE6" stroke-width="6" stroke-linecap="round"/><path d="M70 30 Q50 65 50 84" fill="none" stroke="#C56A3E" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="84" r="5" fill="#E9A23B"/></svg>
+    </div>
+    <h1>My<span class="ph">na</span></h1>
+    <p class="descriptor">One inbox for every customer message — Instagram, Facebook, WhatsApp, TikTok &amp; Viber — answered instantly by Maya, in the shop owner's own voice.</p>
+    <div class="team">Team R1ftw · Gate 2</div>
+    <div class="mascot-note">
+      <!-- Mascot artwork: gate2/assets/maya.jpg -->
+      <img src="../assets/maya.jpg" alt="Maya the myna mascot">
+      <span>Meet Maya — the myna who learns your voice and speaks it back to every customer.</span>
+    </div>
+  </div>
+  <div class="slide-index">01 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 2. PROBLEM HOOK STAT -->
+<!-- ============================================================ -->
+<section class="slide dark hook">
+  <div class="slide-inner">
+    <div class="eyebrow" style="justify-content:center">The Problem, In One Number</div>
+    <p class="stat"><b>78% of customers buy from the first business that responds</b> — and 82% expect a reply within 10 minutes.</p>
+    <div class="src">Lead-response &amp; reply-time-expectation research, compiled in Gate 1 desk research (2026)</div>
+  </div>
+  <div class="slide-index">02 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3a. USER ANALYSIS: METHODOLOGY -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">User Analysis</div>
+    <h2>Methodology</h2>
+    <p class="sub">Who we talked to, and why they matter for a Nepali SMB omnichannel-inbox product.</p>
+    <div class="row-3">
+      <div class="stat-card"><div class="n">5</div><div class="d">total interviews conducted across service verticals in Kathmandu</div></div>
+      <div class="stat-card"><div class="n">3 verticals</div><div class="d">Retail/DTC (online sunglasses store), health/beauty (skin &amp; aesthetics clinic), health (dental clinic)</div></div>
+      <div class="stat-card"><div class="n">+1 reference</div><div class="d">Yodha Labs (IT company) as a supply-side reference point, not a target user</div></div>
+    </div>
+    <ul class="bullets" style="margin-top:30px">
+      <li><b>Who was targeted:</b> solo or near-solo Nepali SMB owners who personally handle all customer communications across Instagram, Facebook, WhatsApp, Viber and TikTok — the owner IS the entire customer-service team.</li>
+      <li><b>Split by design:</b> two interviews (skin clinic, dental clinic) stress-test the reply-accuracy/trust pillar; one (OglePeek) stress-tests the channel-volume/omnichannel pillar; the fifth reinforces that no automated assistant is in use anywhere in the sample.</li>
+    </ul>
+  </div>
+  <div class="slide-index">03 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3b. USER ANALYSIS: FINDINGS -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">User Analysis</div>
+    <h2>Findings</h2>
+    <p class="sub">Cross-interview patterns from the five-interview sample.</p>
+    <ul class="bullets">
+      <li><b>Zero delegation:</b> all owners personally handle communications — no system stands between them and the customer.</li>
+      <li><b>Universal after-hours pressure, coped with differently:</b> one grinds through backlog at 10 PM (dental), one draws a boundary but still caves (skin clinic), one built an internal tool (Yodha — not the target segment).</li>
+      <li><b>Two consistent adoption blockers:</b> trust/accuracy (fear of wrong medical or pricing info) and cost (a NPR 80,000 custom chatbot quote was rejected as too expensive).</li>
+      <li><b>Channel volume alone is already draining:</b> OglePeek's Instagram DM volume overwhelms one co-founder with no after-hours element required.</li>
+      <li><b>Estimated cost of the gap:</b> the skin clinic owner estimates 4–5 lost bookings per week from unanswered after-hours messages.</li>
+    </ul>
+    <div class="quote-block">
+      <p>"Someone will message at 7 or 8 PM... by morning they've already called another clinic."</p>
+      <div class="attr">— Skin &amp; Aesthetics Clinic Owner, Lazimpat</div>
+    </div>
+  </div>
+  <div class="slide-index">04 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 4. PROBLEM IDENTIFICATION SYNTHESIS -->
+<!-- ============================================================ -->
+<section class="slide dark content">
+  <div class="slide-inner">
+    <div class="eyebrow">Problem Identification</div>
+    <h2>Synthesis</h2>
+    <p class="sub muted">Nepali SMB owners are solo customer-service teams spread across five apps, with no way to monitor all of them, respond instantly, or reply consistently at scale.</p>
+    <div class="quote-block">
+      <p>"You've taken that responsibility." — the skin clinic owner explaining why he still checks messages after turning off his eSIM at 6 PM.</p>
+      <div class="attr">Skin &amp; Aesthetics Clinic Owner, Lazimpat</div>
+    </div>
+    <div class="thesis-line">
+      One inbox, every channel, answered <em>instantly</em> and <em>in your own voice</em> — so no lead is ever lost to whoever replies first.
+    </div>
+  </div>
+  <div class="slide-index">05 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 5a. COMPETITOR ANALYSIS — WHO EXISTS -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">Competitor Analysis</div>
+    <h2>Who Exists</h2>
+    <p class="sub">Tools that address pieces of the omnichannel-inbox-plus-auto-reply problem — none fit Nepal's micro-business context.</p>
+    <div class="tbl-wrap">
+      <table class="gtable">
+        <tr><th>Tool</th><th>Origin / Pricing</th><th>Channels</th><th>Built For</th></tr>
+        <tr><td><b>Sambad.io</b></td><td>Nepal-built, NPR 2,499–9,999+/mo</td><td>WhatsApp, Instagram, Facebook, TikTok, web chat, email</td><td>E-commerce/product brands with teams running paid ads</td></tr>
+        <tr><td>WhatsApp Business App</td><td>Free</td><td>WhatsApp only</td><td>Any business</td></tr>
+        <tr><td>WhatsApp Business API</td><td>$49–99+/mo (BSP) + per-message</td><td>WhatsApp only</td><td>SMBs with technical capacity</td></tr>
+        <tr><td>ManyChat</td><td>Free (25 contacts) / $15–29/mo — USD</td><td>Instagram, Facebook, WhatsApp — no Viber</td><td>Social commerce/marketing</td></tr>
+        <tr><td>Wati</td><td>$49–279/mo — USD only</td><td>WhatsApp only</td><td>SMB team inboxes</td></tr>
+        <tr><td>Respond.io</td><td>From $79/mo — USD only</td><td>WhatsApp, Facebook, Instagram, Viber, Telegram, web chat</td><td>Enterprise / multi-agent teams</td></tr>
+        <tr><td>Chatfuel</td><td>$69/mo — USD only</td><td>Instagram, Facebook, WhatsApp — no Viber</td><td>Brands, agencies, e-commerce</td></tr>
+        <tr><td>Tidio</td><td>Free / $29+/mo — USD only</td><td>Website chat, email, Instagram (limited)</td><td>E-commerce, website-first businesses</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="slide-index">06 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 5b. COMPETITOR ANALYSIS — THE GAP -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">Competitor Analysis</div>
+    <h2>The Gap</h2>
+    <div class="tbl-wrap">
+      <table class="gtable">
+        <tr><th>Tool</th><th>Key Gap vs. Our Segment</th></tr>
+        <tr><td><b>Sambad.io</b></td><td>Multi-user team inbox, not solo-friendly; order-placement focused, no owner-voice auto-reply layer; no Viber; effective cost often NPR 4,000–5,000+/month after free-tier auto-reply messages run out.</td></tr>
+        <tr><td>WhatsApp Business App</td><td>Static away-message only — cannot answer questions, capture intent, or triage urgency; single-channel, no automated replies.</td></tr>
+        <tr><td>WhatsApp Business API</td><td>Meta banned general-purpose bots from Jan 2026 — task-specific flows only; technical setup; still single-channel.</td></tr>
+        <tr><td>ManyChat / Wati / Chatfuel / Tidio</td><td>USD billing exceeds or nearly exceeds Nepal's NRB $500/year personal dollar-card cap; wrong channel mix (no Viber, or no WhatsApp at all).</td></tr>
+        <tr><td>Respond.io</td><td>Best channel coverage of any tool, but $948/year — nearly double the NRB cap — and enterprise/multi-agent complexity overkill for a solo owner.</td></tr>
+      </table>
+    </div>
+    <p class="gap-statement">No tool combines (1) affordable NPR pricing that respects the NRB forex cap, (2) true omnichannel coverage across Instagram, Facebook, WhatsApp, Viber (plus TikTok), and (3) a reply layer trained in the individual owner's actual voice, for a Nepali SMB of any vertical. The unoccupied space is the combination, not any single piece.</p>
+  </div>
+  <div class="slide-index">07 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 6. SOLUTION ONE-LINER + MOCKUP -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">The Solution</div>
+    <h2 style="max-width:14ch">One inbox. Every channel. Answered in your voice.</h2>
+    <div class="two-col" style="margin-top:20px">
+      <div>
+        <p class="sub" style="font-size:17px;max-width:48ch">Myna unifies Instagram, Facebook, WhatsApp, TikTok and Viber into a single threaded inbox, and drafts — or auto-sends — replies in the owner's own tone, escalating anything uncertain, high-value, or urgent straight to them.</p>
+        <ul class="bullets" style="margin-top:22px">
+          <li>One-time setup teaches Maya the owner's tone, FAQs, and business info.</li>
+          <li>Every incoming message, on any channel, lands in one place.</li>
+          <li>Low-risk FAQ replies can auto-send; anything risky is flagged for the owner.</li>
+        </ul>
+      </div>
+      <!-- Real screenshot of gate2/prototype/index.html (welcome/splash) -->
+      <div class="phone-mock">
+        <div class="notch"></div>
+        <img class="shot" src="assets/shot-welcome.png" alt="Myna welcome screen — logo, tagline, Get Started">
+      </div>
+    </div>
+  </div>
+  <div class="slide-index">08 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7a. CORE FEATURE 1 -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">Core Features · Must Have 1 of 4</div>
+    <h2>Unified inbox view across channels</h2>
+    <div class="two-col">
+      <div>
+        <p class="sub" style="font-size:16.5px;max-width:46ch">A single scrollable list of every conversation across WhatsApp, Instagram and Facebook (Viber and TikTok shown as "coming soon"), with a channel badge and read/unread state per row — so the owner checks one place instead of five apps.</p>
+      </div>
+      <!-- Real screenshot of gate2/prototype/inbox.html -->
+      <div class="phone-mock">
+        <div class="notch"></div>
+        <img class="shot" src="assets/shot-inbox.png" alt="Unified inbox — channel badges, message previews, Maya replied / needs you states">
+      </div>
+    </div>
+  </div>
+  <div class="slide-index">09 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7b. CORE FEATURE 2 -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">Core Features · Must Have 2 of 4</div>
+    <h2>Maya-drafted replies in conversation view</h2>
+    <div class="two-col">
+      <div>
+        <p class="sub" style="font-size:16.5px;max-width:46ch">Inside each thread, Maya's drafted messages are visually distinct from owner-sent ones, with an inline "Approve &amp; send" or "Edit" action — the owner stays in control while Maya does the drafting.</p>
+      </div>
+      <!-- Real screenshot of gate2/prototype/conversation.html -->
+      <div class="phone-mock">
+        <div class="notch"></div>
+        <img class="shot" src="assets/shot-conversation.png" alt="Conversation thread — Maya's drafted reply with Approve &amp; send / Edit, owner-sent bubbles">
+      </div>
+    </div>
+  </div>
+  <div class="slide-index">10 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7c. CORE FEATURE 3 -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">Core Features · Must Have 3 of 4</div>
+    <h2>Owner tone/FAQ setup</h2>
+    <div class="two-col">
+      <div>
+        <p class="sub" style="font-size:16.5px;max-width:46ch">A one-time setup screen — business info, a tone selector (friendly / formal / concise), and an editable FAQ list — that trains Maya to reply the way the owner actually would.</p>
+      </div>
+      <!-- Real screenshot of gate2/prototype/setup.html -->
+      <div class="phone-mock">
+        <div class="notch"></div>
+        <img class="shot" src="assets/shot-setup.png" alt="Setup — business info, tone slider, FAQ list Maya has learned">
+      </div>
+    </div>
+  </div>
+  <div class="slide-index">11 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7d. CORE FEATURE 4 -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">Core Features · Must Have 4 of 4</div>
+    <h2>Channel connect flow</h2>
+    <div class="two-col">
+      <div>
+        <p class="sub" style="font-size:16.5px;max-width:46ch">Fake "Connect" buttons for WhatsApp, Instagram and Facebook with a success state; Viber and TikTok appear as "Coming soon" pills, reflecting their evidence status honestly rather than overclaiming scope.</p>
+      </div>
+      <!-- Real screenshot of gate2/prototype/setup.html (Connected channels section) -->
+      <div class="phone-mock">
+        <div class="notch"></div>
+        <img class="shot" src="assets/shot-channels.png" alt="Connected channels — WhatsApp/Instagram/Facebook on, Viber/TikTok coming soon">
+      </div>
+    </div>
+  </div>
+  <div class="slide-index">12 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 8. MASCOT -->
+<!-- ============================================================ -->
+<section class="slide dark">
+  <div class="slide-inner">
+    <div class="eyebrow">Meet The Mascot</div>
+    <div class="two-col" style="align-items:center">
+      <div>
+        <h2 style="color:#fff;font-size:44px">Maya, the myna</h2>
+        <p class="muted" style="font-size:16px;margin-top:14px;max-width:46ch">A myna bird that literally learns the voices around it and speaks them back — the single most demo-able metaphor for something that replies in your voice. Restyled toward the merged brand's navy-and-brass system: deep navy/teal plumage, a brass-gold eye-ring signature, and a small clay/marigold chest-flash — so she reads as trusted infrastructure, not only a warm character.</p>
+        <ul class="bullets" style="margin-top:22px">
+          <li><b>Personality:</b> warm, clever, talkative, loyal, quietly premium.</li>
+          <li><b>Voice:</b> speaks in the shop owner's own tone — never robotic, always sounds like a person who knows the customer.</li>
+          <li><b>Role:</b> she's the face of the auto-reply feature — "never miss a lead, never sound like a bot."</li>
+        </ul>
+      </div>
+      <div style="display:flex;justify-content:center">
+        <img src="../assets/maya.jpg" alt="Maya the myna mascot" style="width:280px;height:280px;object-fit:cover;border-radius:20px;border:2px solid rgba(201,162,75,.4);box-shadow:0 20px 40px rgba(0,0,0,.45)">
+      </div>
+    </div>
+  </div>
+  <div class="slide-index">13 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 9. BRAND AND VISION BOARD (LINK OUT) -->
+<!-- ============================================================ -->
+<section class="slide linkout">
+  <div class="slide-inner">
+    <h1>Myna — Brand &amp; Vision Board</h1>
+    <a class="url" href="../brand/brand-board.html">../brand/brand-board.html</a>
+  </div>
+  <div class="slide-index">14 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 10. MVP (LINK OUT) -->
+<!-- ============================================================ -->
+<section class="slide linkout">
+  <div class="slide-inner">
+    <h1 style="font-size:96px">MVP</h1>
+    <a class="url" href="../prototype/index.html">../prototype/index.html</a>
+  </div>
+  <div class="slide-index">15 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 11. KEYWORDS + TAGLINE -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">Brand Voice</div>
+    <h2>Keywords &amp; Tagline</h2>
+    <div class="kw-grid">
+      <div class="kw-card">
+        <h3>Cluster A — The Trust Bet</h3>
+        <ul>
+          <li>Never miss a lead</li>
+          <li>One inbox</li>
+          <li>Always-on</li>
+          <li>Reliable replies</li>
+          <li>System of record</li>
+        </ul>
+      </div>
+      <div class="kw-card">
+        <h3>Cluster B — The Human Bet</h3>
+        <ul>
+          <li>Your voice, everywhere</li>
+          <li>Human warmth</li>
+          <li>Instant, personal</li>
+          <li>Sounds like you</li>
+          <li>Speaks your shop</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tagline-band">
+      <div class="q">Never miss a lead. <em>Never sound like a bot.</em></div>
+      <div class="rec">★ Recommended — two-beat construction mapping Cluster A → Cluster B</div>
+    </div>
+  </div>
+  <div class="slide-index">16 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 12. MOSCOW -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">MVP Scope</div>
+    <h2>MoSCoW</h2>
+    <div class="moscow-grid">
+      <div class="mos-card must">
+        <h3>Must Have</h3>
+        <ul>
+          <li>Unified inbox view across channels — single scrollable list, channel badge/icon, read/unread state</li>
+          <li>Maya-drafted replies in conversation view — distinct "drafted" vs. "owner sent" bubbles</li>
+          <li>Owner tone/FAQ setup screen — business info, tone selector, FAQ list</li>
+          <li>Channel connect flow (WhatsApp/IG/FB) — fake "Connect" buttons; Viber/TikTok shown as "Coming soon"</li>
+        </ul>
+      </div>
+      <div class="mos-card should">
+        <h3>Should Have</h3>
+        <ul>
+          <li>Urgent-message flagging — red/amber flag on conversations Maya is unsure about or deems urgent</li>
+          <li>Order/booking capture in-chat — a structured "booking card"/"order summary" inline in a conversation</li>
+        </ul>
+      </div>
+      <div class="mos-card could">
+        <h3>Could Have</h3>
+        <ul>
+          <li>CRM/lead tracking — basic contact history or tags (e.g. "returning customer," "3 bookings")</li>
+          <li>Multi-agent/team seats — a second "staff" avatar or assignment dropdown, shown but not deeply functional</li>
+        </ul>
+      </div>
+      <div class="mos-card wont">
+        <h3>Won't (Yet)</h3>
+        <ul>
+          <li>Viber/TikTok integration — coming-soon pills only, no working demo screens</li>
+          <li>Payment processing — no checkout, invoicing, or payment-collection flow</li>
+          <li>Full CRM — no pipeline, deal stages, or reporting/analytics suite</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-index">17 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 13. TECH STACK -->
+<!-- ============================================================ -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="eyebrow">How It's Built</div>
+    <h2>Tech Stack</h2>
+    <div class="tech-grid">
+      <div class="tech-row"><div class="lbl">Frontend</div><p>React Native / Expo cross-platform mobile app for iOS and Android — or a simple responsive web app for the MVP demo.</p></div>
+      <div class="tech-row"><div class="lbl">Backend</div><p>A managed database + authentication service (e.g. Supabase) for user accounts, channel connections, and API management.</p></div>
+      <div class="tech-row"><div class="lbl">Reply Engine</div><p>Conversational engine for drafting replies in the owner's voice, handling FAQs, and flagging urgent/uncertain messages for escalation.</p></div>
+      <div class="tech-row"><div class="lbl">Data</div><p>Conversation history and business-context store — FAQs, tone settings, contact history — feeding both Maya's replies and future CRM features.</p></div>
+      <div class="tech-row" style="border-bottom:none"><div class="lbl">Design</div><p>Figma for interface design, component system, and user-tested prototyping ahead of build.</p></div>
+    </div>
+  </div>
+  <div class="slide-index">18 / 19</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- extra: legal/regulatory one-liner (kept close to rhythm, optional context slide) -->
+<!-- (Not a numbered rhythm slide per spec — omitted to keep exact 14-step rhythm from the brief) -->
+
+<!-- ============================================================ -->
+<!-- 14. THANK YOU -->
+<!-- ============================================================ -->
+<section class="slide thankyou">
+  <div class="slide-inner">
+    <h1>Thank You</h1>
+    <p class="tag">Myna — Never miss a lead. Never sound like a bot.</p>
+  </div>
+  <div class="slide-index">19 / 19</div>
+</section>
+
+</body>
+</html>

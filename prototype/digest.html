@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Digest — Myna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F3A; --sea:#13315C; --steel:#27496D;
+    --brass:#C9A24B; --brass-soft:#E3CB8E;
+    --bone:#F4EFE6; --paper:#FBF8F1; --mist:#DDE3EA;
+    --clay:#C56A3E; --clay-deep:#A8512B; --marigold:#E9A23B;
+    --slate:#2A3340; --muted:#6B7686;
+    --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--sans);color:var(--slate);background:#0d1730;line-height:1.4;-webkit-font-smoothing:antialiased;display:flex;justify-content:center}
+
+  .phone{width:100%;max-width:420px;min-height:100vh;background:var(--paper);display:flex;flex-direction:column;position:relative}
+
+  .topbar{background:linear-gradient(160deg,#13315C,var(--ink));color:#fff;padding:22px 18px 24px;position:relative;overflow:hidden;flex-shrink:0}
+  .topbar::after{content:"";position:absolute;inset:0;background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:34px 34px;mask-image:radial-gradient(400px 300px at 80% 0%,#000,transparent 75%);pointer-events:none}
+  .topbar-row{display:flex;align-items:center;gap:12px;position:relative;z-index:2}
+  .back{width:34px;height:34px;border-radius:10px;background:rgba(244,239,230,.08);border:1px solid rgba(201,162,75,.3);
+    display:flex;align-items:center;justify-content:center;text-decoration:none;flex:0 0 auto}
+  .back svg{width:16px;height:16px;stroke:var(--brass-soft);fill:none;stroke-width:2}
+  .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-soft)}
+  .topbar h1{font-family:var(--serif);font-weight:500;font-size:22px;margin-top:4px;position:relative;z-index:2}
+
+  .stats{display:flex;gap:10px;margin-top:20px;position:relative;z-index:2}
+  .stat{flex:1;background:rgba(244,239,230,.07);border:1px solid rgba(201,162,75,.25);border-radius:14px;padding:14px 10px;text-align:center}
+  .stat .num{font-family:var(--serif);font-size:26px;color:#fff}
+  .stat .lbl{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--brass-soft);margin-top:4px}
+  .stat.flag .num{color:var(--marigold)}
+
+  .content{flex:1;padding:20px 18px 100px}
+  .section-title{font-family:var(--serif);font-size:17px;color:var(--ink);margin-bottom:4px}
+  .section-sub{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+
+  .flagcard{display:flex;gap:12px;background:#fff;border:1px solid var(--mist);border-radius:14px;padding:14px;
+    margin-bottom:12px;text-decoration:none;color:inherit;align-items:flex-start}
+  .flagcard:last-child{margin-bottom:0}
+  .flagnum{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:rgba(197,106,62,.12);color:var(--clay-deep);
+    font-family:var(--mono);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .flagbody{flex:1;min-width:0}
+  .flagtop{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+  .flagname{font-size:14px;font-weight:700;color:var(--ink)}
+  .flagchannel{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .flagreason{font-size:13px;color:var(--slate);margin-top:5px}
+  .flagreason b{color:var(--clay-deep);font-weight:600}
+  .flagcta{margin-top:8px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--clay-deep)}
+
+  .autocard{margin-top:22px;background:rgba(60,184,120,.08);border:1px solid rgba(60,184,120,.3);border-radius:14px;padding:14px 16px;
+    display:flex;gap:10px;align-items:flex-start}
+  .autocard svg{width:18px;height:18px;stroke:#2f7a52;fill:none;stroke-width:2;flex:0 0 auto;margin-top:1px}
+  .autocard p{font-size:13px;color:var(--slate)}
+  .autocard b{color:#2f7a52}
+
+  .navlinks{display:flex;gap:10px;padding:20px 18px 8px}
+  .navlink{flex:1;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--mist);background:#fff;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+
+  .bottomnav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:420px;
+    background:#fff;border-top:1px solid var(--mist);display:flex;padding:10px 6px 14px;z-index:10}
+  .navitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.04em}
+  .navitem svg{width:19px;height:19px;stroke:var(--muted);fill:none;stroke-width:1.7}
+  .navitem.active{color:var(--ink)}
+  .navitem.active svg{stroke:var(--clay)}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="topbar">
+    <div class="topbar-row">
+      <a class="back" href="inbox.html" aria-label="Back to inbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div>
+        <div class="eyebrow">Overnight digest · Today, 7:30 AM</div>
+        <h1>While you were away</h1>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num">12</div><div class="lbl">Messages</div></div>
+      <div class="stat"><div class="num">9</div><div class="lbl">Auto-replied</div></div>
+      <div class="stat flag"><div class="num">3</div><div class="lbl">Flagged</div></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="section-title">Needs your attention</div>
+    <div class="section-sub">Maya wasn't confident enough to send these on her own.</div>
+
+    <a class="flagcard" href="conversation.html">
+      <div class="flagnum">1</div>
+      <div class="flagbody">
+        <div class="flagtop"><span class="flagname">Sunita Pradhan</span><span class="flagchannel">WhatsApp</span></div>
+        <div class="flagreason"><b>Reason:</b> asked about a catering price we don't have confirmed on file (250 vs. 280/plate).</div>
+        <div class="flagcta">View conversation →</div>
+      </div>
+    </a>
+
+    <a class="flagcard" href="conversation.html">
+      <div class="flagnum">2</div>
+      <div class="flagbody">
+        <div class="flagtop"><span class="flagname">Anish K.C.</span><span class="flagchannel">Facebook</span></div>
+        <div class="flagreason"><b>Reason:</b> angry customer reporting a 6-day-late delivery — routed to you instead of auto-replying.</div>
+        <div class="flagcta">View conversation →</div>
+      </div>
+    </a>
+
+    <a class="flagcard" href="conversation.html">
+      <div class="flagnum">3</div>
+      <div class="flagbody">
+        <div class="flagtop"><span class="flagname">Prabin Lama</span><span class="flagchannel">Facebook</span></div>
+        <div class="flagreason"><b>Reason:</b> asked for a bulk discount — pricing exception outside the FAQ list.</div>
+        <div class="flagcta">View conversation →</div>
+      </div>
+    </a>
+
+    <div class="autocard">
+      <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+      <p><b>9 other conversations</b> were handled automatically overnight — order confirmations, hours &amp; location questions, and repeat FAQs, all answered in your voice.</p>
+    </div>
+  </div>
+
+  <div class="navlinks">
+    <a class="navlink" href="inbox.html">Go to inbox</a>
+    <a class="navlink" href="setup.html">Edit setup</a>
+  </div>
+
+  <nav class="bottomnav">
+    <a class="navitem" href="inbox.html">
+      <svg viewBox="0 0 24 24"><path d="M4 5h16v11H7l-3 3z" stroke-linejoin="round"/></svg>Inbox
+    </a>
+    <a class="navitem active" href="digest.html">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/></svg>Digest
+    </a>
+    <a class="navitem" href="setup.html">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.56V21a2 2 0 01-4 0v-.09a1.7 1.7 0 00-1-1.55 1.7 1.7 0 00-1.87.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.7 1.7 0 00.33-1.87 1.7 1.7 0 00-1.55-1H3a2 2 0 010-4h.09a1.7 1.7 0 001.55-1 1.7 1.7 0 00-.33-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06a1.7 1.7 0 001.87.33H9a1.7 1.7 0 001-1.55V3a2 2 0 014 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.7 1.7 0 00-.33 1.87V9c.26.6.8 1 1.55 1H21a2 2 0 010 4h-.09a1.7 1.7 0 00-1.55 1z"/></svg>Setup
+    </a>
+  </nav>
+
+</div>
+</body>
+</html>
