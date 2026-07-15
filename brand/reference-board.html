@@ -75,23 +75,20 @@
   .col.trust .col-head p{color:#cdd6e2}
   .col.human .col-head p{color:var(--m-sand);font-family:var(--dmsans)}
 
-  .refs{background:#fff;padding:10px}
-  .ref{display:grid;grid-template-columns:210px 1fr;gap:24px;padding:24px;border-top:1px solid var(--mist);border-radius:14px;transition:background .15s}
-  .refs .ref:first-child{border-top:none}
+  .refs{background:#fff;padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:4px}
+  .ref{padding:14px;border-radius:14px;transition:background .15s}
   .ref:hover{background:var(--bone)}
   .col.human .ref:hover{background:var(--m-sand)}
-  .swatch{border-radius:12px;aspect-ratio:4/3;min-height:0;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;position:relative;overflow:hidden;border:1px solid var(--mist);box-shadow:0 8px 20px rgba(11,31,58,.10)}
+  .swatch{border-radius:12px;aspect-ratio:16/10;min-height:0;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;position:relative;overflow:hidden;border:1px solid var(--mist);box-shadow:0 8px 20px rgba(11,31,58,.10);margin-bottom:14px}
   .swatch img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
   .swatch .tag2{background:rgba(11,31,58,.72);align-self:flex-start;padding:4px 8px;border-radius:6px}
   .swatch .tag2{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5);position:relative;z-index:2}
-  .ref h4{font-family:var(--sans);font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.3}
+  .ref h4{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px;line-height:1.3}
   .col.human .ref h4{font-family:var(--dmsans);color:var(--m-ink)}
-  .ref .src{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--brass);margin-bottom:10px;display:block}
-  .col.human .ref .src{color:var(--m-clay)}
-  .ref p{font-size:13.8px;color:var(--slate);margin-bottom:10px}
-  .ref .borrow{background:var(--bone);border-left:3px solid var(--brass);padding:11px 14px;border-radius:0 8px 8px 0;font-size:13px;margin-top:8px}
-  .col.human .ref .borrow{background:#fff;border-left:3px solid var(--m-clay)}
-  .ref .borrow b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--muted)}
+  .ref .borrow{background:var(--bone);border-radius:10px;padding:11px 14px;font-size:13px}
+  .col.human .ref .borrow{background:#fff}
+  .ref .borrow b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--brass)}
+  .col.human .ref .borrow b{color:var(--m-clay)}
 
   /* trust swatch variants */
   .sw-t1{background:linear-gradient(160deg,#0B1F3A,#13315C)}
@@ -114,7 +111,8 @@
   footer{background:var(--ink);color:var(--mist);text-align:center;padding:50px 20px;font-family:var(--mono);font-size:12px;letter-spacing:.1em}
   footer a{color:var(--brass);text-decoration:none}
 
-  @media(max-width:900px){.board-cols{grid-template-columns:1fr}.ref{grid-template-columns:1fr}}
+  @media(max-width:900px){.board-cols{grid-template-columns:1fr}}
+  @media(max-width:560px){.refs{grid-template-columns:1fr}}
   @media(max-width:640px){.topbar{padding:14px 20px;flex-wrap:wrap}.wrap{padding:0 20px}header.hero{padding:70px 0 50px}section{padding:50px 0}}
 </style>
 </head>
@@ -160,33 +158,21 @@
         <div class="refs">
 
           <div class="ref">
-            <div class="swatch sw-t1"><img src="assets/refs/bloomberg.png" alt="Bloomberg Terminal product page — amber-on-black data density"><span class="tag2">bloomberg.com/professional</span></div>
-            <div>
-              <h4>Bloomberg Terminal — amber-on-black data aesthetic</h4>
-              <span class="src">Financial software · est. 1980s</span>
-              <p>The terminal kept its dark, high-density, single-accent-color screen for 40+ years because traders read it as a mark of professional seriousness — complexity signals capability, not clutter.</p>
-              <div class="borrow"><b>Borrow</b>Use ONE accent color (brass) sparingly against a dark ground for data/status states in the AI-reply dashboard — never mix a second accent hue, exactly as Bloomberg holds the line on amber.</div>
-            </div>
+            <div class="swatch sw-t1"><img src="assets/refs/bloomberg.png" alt="Bloomberg Terminal product page — amber-on-black data density"><span class="tag2">Bloomberg Terminal</span></div>
+            <h4>One accent color, dark ground, 40 years running.</h4>
+            <div class="borrow"><b>Borrow</b>ONE accent (brass) on dark, never a second hue — same discipline for dashboard status states.</div>
           </div>
 
           <div class="ref">
-            <div class="swatch sw-t2"><img src="assets/refs/jpmc.png" alt="jpmorganchase.com homepage — serif wordmark, warm brown accent over black photography"><span class="tag2">jpmorganchase.com</span></div>
-            <div>
-              <h4>JPMorganChase — 2024 rebrand (serif + brown + octagon vault mark)</h4>
-              <span class="src">Banking · rebrand 2024</span>
-              <p>Their newest identity paired a bolder serif with rounded terminals and added a warm brown to an otherwise cold-blue system "for reliability" — softening institutional blue without losing gravitas. The octagon mark still reads as a vault.</p>
-              <div class="borrow"><b>Borrow</b>The move of adding ONE warm neutral (brass/bone) to soften navy — validates Sangam's 60/30/10 ratio as an intentional, bank-tested technique rather than a stylistic guess. Also: a single enclosed geometric badge (like the octagon) reads as "vault/security" — good model for Ulu's crest mark.</div>
-            </div>
+            <div class="swatch sw-t2"><img src="assets/refs/jpmc.png" alt="jpmorganchase.com homepage — serif wordmark, warm brown accent over black photography"><span class="tag2">JPMorganChase</span></div>
+            <h4>2024 rebrand added one warm neutral to cold institutional blue.</h4>
+            <div class="borrow"><b>Borrow</b>Validates Sangam's 60/30/10 navy+brass ratio — a bank-tested move, not a guess.</div>
           </div>
 
           <div class="ref">
-            <div class="swatch sw-t4"><img src="assets/refs/mercury.png" alt="mercury.com homepage — calm landscape hero, restrained copy, single accent button"><span class="tag2">mercury.com</span></div>
-            <div>
-              <h4>Mercury — numberless cards, muted palette, "all signal no filler" copy</h4>
-              <span class="src">Neobank · $5.2B valuation, 2026</span>
-              <p>Mercury builds trust through restraint: soft gradients, minimal visual noise, sensitive data hidden by default, and marketing copy stripped of corporate filler. Premium reads as "nothing to prove."</p>
-              <div class="borrow"><b>Borrow</b>Apply the "hide the noisy data, show only what matters" pattern to Sangam's unified inbox — collapse channel badges/timestamps into a calm single thread by default, expand only on click. Restraint as a trust signal, not just a color choice.</div>
-            </div>
+            <div class="swatch sw-t4"><img src="assets/refs/mercury.png" alt="mercury.com homepage — calm landscape hero, restrained copy, single accent button"><span class="tag2">Mercury</span></div>
+            <h4>Trust through restraint — noise hidden by default.</h4>
+            <div class="borrow"><b>Borrow</b>Collapse channel badges/timestamps into a calm thread by default; expand on click.</div>
           </div>
 
         </div>
@@ -202,33 +188,21 @@
         <div class="refs">
 
           <div class="ref">
-            <div class="swatch sw-h1"><img src="assets/refs/airbnb.png" alt="Airbnb newsroom — Made Possible by Hosts campaign announcement with warm documentary photography"><span class="tag2">news.airbnb.com</span></div>
-            <div>
-              <h4>Airbnb — "Made Possible by Hosts" (2021 global campaign)</h4>
-              <span class="src">Travel/marketplace · doc photography</span>
-              <p>Real photos shot on real trips by working documentary photographers (Christopher Anderson, Magdalena Wosinska among 100+), edited with warm, nostalgic color grading and classic-song scoring — never staged model shoots.</p>
-              <div class="borrow"><b>Borrow</b>The production model, not just the look: commission working photographers to shoot actual Nepali shop owners in their own shops over a few real working days, rather than art-directing a "diverse cast" studio shoot. Grade warm/golden, slightly desaturated — matches Maina's golden-hour direction exactly.</div>
-            </div>
+            <div class="swatch sw-h1"><img src="assets/refs/airbnb.png" alt="Airbnb newsroom — Made Possible by Hosts campaign announcement with warm documentary photography"><span class="tag2">Airbnb, 2021</span></div>
+            <h4>Real trips, real photographers, never a staged shoot.</h4>
+            <div class="borrow"><b>Borrow</b>Shoot real shop owners on real working days, graded warm and slightly desaturated.</div>
           </div>
 
           <div class="ref">
-            <div class="swatch sw-h2"><img src="assets/refs/cashapp.png" alt="cash.app homepage — people-first fintech brand"><span class="tag2">cash.app</span></div>
-            <div>
-              <h4>Cash App — "Cash App Communities" documentary series</h4>
-              <span class="src">Fintech · observational documentary, 2024</span>
-              <p>Moves fintech marketing away from feature/convenience messaging toward people-first storytelling: observational films where the product is woven into the action rather than being the subject, showing how small transactions sustain human bonds.</p>
-              <div class="borrow"><b>Borrow</b>Content strategy, not visual style: build Maina's launch story around 3-4 real shop-owner mini-documentaries where the AI auto-reply is glimpsed in use, not explained — a layout idea for the mood/testimonial section of the brand board (video-still grid instead of icon grid).</div>
-            </div>
+            <div class="swatch sw-h2"><img src="assets/refs/cashapp.png" alt="cash.app homepage — people-first fintech brand"><span class="tag2">Cash App</span></div>
+            <h4>People-first stories, product just glimpsed in the action.</h4>
+            <div class="borrow"><b>Borrow</b>3–4 shop-owner mini-docs where auto-reply appears, never explained.</div>
           </div>
 
           <div class="ref">
-            <div class="swatch sw-h4"><img src="assets/refs/workoholics.png" alt="workoholics.es — oversized editorial type on warm cream ground"><span class="tag2">workoholics.es</span></div>
-            <div>
-              <h4>Workoholics — "WIP" (Work in Progress) creative-community editorial</h4>
-              <span class="src">Digital agency · editorial platform, est. 2022</span>
-              <p>WIP's own visual language centers the "ever-changing, intense, deeply human" moment of creative work-in-progress — imperfect, mid-process, expressive faces rather than polished portraits, explicitly named in the handoff brief as Maina's direct inspiration.</p>
-              <div class="borrow"><b>Borrow</b>The "process, not polish" framing: photograph shop owners mid-task (wrapping an order, typing a reply, mid-laugh) instead of posed portraits — a candid, slightly imperfect crop/framing style, reinforcing Maina's "in your voice" authenticity claim.</div>
-            </div>
+            <div class="swatch sw-h4"><img src="assets/refs/workoholics.png" alt="workoholics.es — oversized editorial type on warm cream ground"><span class="tag2">Workoholics WIP</span></div>
+            <h4>Process, not polish — mid-task over posed portraits.</h4>
+            <div class="borrow"><b>Borrow</b>Candid framing: wrapping an order, typing a reply, mid-laugh — never posed.</div>
           </div>
 
         </div>
